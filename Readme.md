@@ -6,3 +6,4 @@
     yarn global add nodemon ts-node typescript # 安装ts node环境
     nodemon index.ts
 ```
+test
