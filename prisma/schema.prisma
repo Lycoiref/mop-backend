@@ -41,14 +41,14 @@ model reimburse {
 }
 
 model users {
-    userno       Int     @id
-    useraccount  String? @db.VarChar(255)
-    userpassword String? @db.VarChar(255)
-    userrole     String? @db.VarChar(255)
-    username     String? @db.VarChar(255)
-    userphone    String? @db.VarChar(255)
-    useridcard   String? @db.VarChar(255)
-    idcardcheck  Int?
+    id          Int     @id @default(autoincrement())
+    username    String? @db.VarChar(255)
+    idcardcheck Int?
+    account     String? @db.VarChar(255)
+    idcard      String? @db.VarChar(255)
+    password    String? @db.VarChar(255)
+    phone       String? @db.VarChar(255)
+    role        String? @db.VarChar(255)
 }
 
 model webobject {
