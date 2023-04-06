@@ -4,6 +4,7 @@
     "start": "tsc && node dist/index.js"
   },
   "dependencies": {
+    "@prisma/client": "^4.12.0",
     "@types/koa": "^2.13.6",
     "@types/koa-router": "^7.4.4",
     "@types/koa2-cors": "^2.0.2",

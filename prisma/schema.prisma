@@ -1,0 +1,63 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model device {
+    deviceno      Int     @id
+    devicekind    Int?
+    devicename    String? @db.VarChar(255)
+    deviceaddress String? @db.VarChar(255)
+    deviceqrcode  String?
+}
+
+model record {
+    recordno      Int       @id
+    fixmanager    Int?
+    fixworker     Int?
+    fixapplicant  Int?
+    fixtime       DateTime? @db.Date
+    fixstatus     Int?
+    deviceno      Int?
+    applicantsay  String?
+    applicantstar Int?
+    workersay     String?
+    workerstar    Int?
+    photo0        String?
+    photo1        String?
+    photo2        String?
+}
+
+model reimburse {
+    reimburseno Int     @id
+    fixworker   Int?
+    things      String? @db.VarChar(255)
+    prize       Int?
+    evidence    String?
+}
+
+model users {
+    userno       Int     @id
+    useraccount  String? @db.VarChar(255)
+    userpassword String? @db.VarChar(255)
+    userrole     String? @db.VarChar(255)
+    username     String? @db.VarChar(255)
+    userphone    String? @db.VarChar(255)
+    useridcard   String? @db.VarChar(255)
+    idcardcheck  Int?
+}
+
+model webobject {
+    objectno      Int     @id
+    objectcontent String?
+}
+
+model paramrecord {
+    paramcontent String?
+    paramname    String?
+    paramno      Int     @id
+}

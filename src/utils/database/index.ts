@@ -1,0 +1,2 @@
+import prisma from "./database"
+

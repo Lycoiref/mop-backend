@@ -1,8 +1,8 @@
 import Koa from 'koa'
 import Router from 'koa-router'
 import cors from 'koa2-cors'
-import api from '../api/api'
-import user from '../api/user'
+import api from './api/api'
+import user from './api/user'
 
 const app = new Koa()
 const router = new Router()
