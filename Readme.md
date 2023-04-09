@@ -4,6 +4,10 @@
 ```bash
     yarn install
     yarn global add nodemon ts-node typescript # 安装ts node环境
+    yarn global add prisma # 安装prisma
+    yarn add @prisma/client # 安装prisma client
+    npx prisma db pull
+    npx prisma generate
     # nodemon index.ts
     yarn dev
 ```
