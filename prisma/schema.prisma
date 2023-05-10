@@ -7,12 +7,61 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+// 设备信息
 model device {
-    deviceno      Int     @id
-    devicekind    Int?
-    devicename    String? @db.VarChar(255)
-    deviceaddress String? @db.VarChar(255)
-    deviceqrcode  String?
+    device_no      Int     @id
+    device_kind    Int?
+    device_name    String? @db.VarChar(255)
+    device_address String? @db.VarChar(255)
+    device_qrcode  String?
+    form           repair_form?
+}
+
+// 用户信息
+model user {
+    id          Int     @id @default(autoincrement())
+    username    String? @db.VarChar(255)
+    idcardcheck Int?
+    account     String? @db.VarChar(255)
+    idcard      String? @db.VarChar(255)
+    password    String? @db.VarChar(255)
+    phone       String? @db.VarChar(255)
+    role        String? @db.VarChar(255)
+    form        repair_form?
+}
+
+// 工单信息
+model repair_form {
+    id            Int       @id @default(autoincrement())
+    device_info   device    @relation(fields: [device_id], references: [device_no])
+    device_id     Int   @unique
+    user_info     user      @relation(fields: [user_id], references: [id])
+    user_id       Int   @unique    
+    fault_desc    String? @db.VarChar(255)
+    fault_pic     String? @db.VarChar(255)
+    door_time     DateTime? @db.Date
+}
+
+// 历史报修记录
+model historical_repair_record {
+    repair_no      Int     @id
+    device_name    String?
+    repair_person  String?
+    repair_address String?
+    repair_reason  String?
+    comment_status Boolean? @default(false)
+}
+
+// 发票报销记录
+model reimbursement_record {
+    // 主键、发票代码
+    reimburse_no      Int     @id
+    applicant_name    String? @db.VarChar(255)
+    seller            String? @db.VarChar(255)
+    tax_price         Int?
+    billing_date      DateTime? @db.Date
+    status            Boolean? @default(false)
+    approver          String? @db.VarChar(255)
 }
 
 model record {
@@ -30,25 +79,6 @@ model record {
     photo0        String?
     photo1        String?
     photo2        String?
-}
-
-model reimburse {
-    reimburseno Int     @id
-    fixworker   Int?
-    things      String? @db.VarChar(255)
-    prize       Int?
-    evidence    String?
-}
-
-model users {
-    id          Int     @id @default(autoincrement())
-    username    String? @db.VarChar(255)
-    idcardcheck Int?
-    account     String? @db.VarChar(255)
-    idcard      String? @db.VarChar(255)
-    password    String? @db.VarChar(255)
-    phone       String? @db.VarChar(255)
-    role        String? @db.VarChar(255)
 }
 
 model webobject {
