@@ -63,31 +63,3 @@ model reimbursement_record {
     status            Boolean? @default(false)
     approver          String? @db.VarChar(255)
 }
-
-model record {
-    recordno      Int       @id
-    fixmanager    Int?
-    fixworker     Int?
-    fixapplicant  Int?
-    fixtime       DateTime? @db.Date
-    fixstatus     Int?
-    deviceno      Int?
-    applicantsay  String?
-    applicantstar Int?
-    workersay     String?
-    workerstar    Int?
-    photo0        String?
-    photo1        String?
-    photo2        String?
-}
-
-model webobject {
-    objectno      Int     @id
-    objectcontent String?
-}
-
-model paramrecord {
-    paramcontent String?
-    paramname    String?
-    paramno      Int     @id
-}

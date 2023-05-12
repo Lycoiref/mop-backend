@@ -1,4 +1,5 @@
 import Koa from 'koa'
+const bodyParser = require('koa-bodyparser')
 import Router from 'koa-router'
 import cors from 'koa2-cors'
 import { initAdmin } from './utils/database/index'
@@ -6,6 +7,8 @@ import { api, user } from './api/index'
 
 const app = new Koa()
 const router = new Router()
+
+app.use(bodyParser())
 
 router.get('/', ctx => {
     ctx.body = 'Hello World'

@@ -1,23 +1,23 @@
 import Router from 'koa-router'
-import { UserInput } from '../utils/types';
-import { user as User } from '@prisma/client';
+import { ReimbursementRecordInput } from '../utils/types';
+import { reimbursement_record as ReimbursementRecord } from '@prisma/client';
 import prisma from '../utils/database/database';
 
 const router = new Router();
 
-router.post('/user', async (ctx) => {
-    const data: UserInput = {
-        ...ctx.request.body as User
+router.post('/reimburse', async (ctx) => {
+    const data: ReimbursementRecordInput = {
+        ...ctx.request.body as ReimbursementRecord
     }
 
-    const user = await prisma.user.create({
+    const reimbursementRecord = await prisma.reimbursement_record.create({
         data
     })
 
-    ctx.body = user
+    ctx.body = reimbursementRecord
 })
 
-router.delete('/user/:id', async (ctx) => {
+router.delete('/reimburse/:id', async (ctx) => {
     const id = parseInt(ctx.params.id)
     const user = await prisma.user.delete({
         where: { id: id },
@@ -25,7 +25,7 @@ router.delete('/user/:id', async (ctx) => {
     ctx.body = user
 })
 
-router.put('/user/:id', async (ctx) => {
+router.put('/reimburse/:id', async (ctx) => {
     const id = parseInt(ctx.params.id)
     const user = await prisma.user.update({
       where: { id: id },
@@ -36,12 +36,12 @@ router.put('/user/:id', async (ctx) => {
     ctx.body = user
 })
 
-router.get('/user', async (ctx) => {
+router.get('/reimburse', async (ctx) => {
     const users = await prisma.user.findMany()
     ctx.body = users
 })
 
-router.get('/user/:id', async (ctx) => {
+router.get('/reimburse/:id', async (ctx) => {
     const userId = parseInt(ctx.params.id)
     const user = await prisma.user.findUnique({ where: { id: userId } })
     if (user) {

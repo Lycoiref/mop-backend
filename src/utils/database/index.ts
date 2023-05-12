@@ -1,7 +1,7 @@
 import prisma from "./database"
 
 export async function initAdmin() {
-    const admin = await prisma.users.findFirst({
+    const admin = await prisma.user.findFirst({
         where: {
             username: "admin"
         }
@@ -9,7 +9,7 @@ export async function initAdmin() {
 
     if (!admin) {
         console.log("admin not found, creating admin")
-        let result = await prisma.users.create({
+        let result = await prisma.user.create({
             data: {
                 username: "admin",
                 password: "admin",
