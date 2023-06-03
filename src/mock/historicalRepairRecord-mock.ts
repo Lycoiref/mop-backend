@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker';
-
+import generateFakeData from './utils';
 
 // 生成虚拟用户数据
-const generateFakeUser = () => {
-  const deviceName = faker.random.word()
-  const repairPerson = faker.name.firstName()
-  const repairAddress = faker.address.streetAddress()
+export const generateFakeHistoricalRepairRecord = () => {
+  const deviceName = faker.lorem.word()
+  const repairPerson = faker.person.firstName()
+  const repairAddress = faker.location.streetAddress()
   const repairReason = faker.lorem.sentence()
   const commentStatus = Math.random() < 0.5
 
@@ -18,11 +18,5 @@ const generateFakeUser = () => {
   };
 };
 
-// 使用 generateFakeUser 生成 10 个虚拟用户
-const fakeUsers = [];
-for (let i = 0; i < 10; i++) {
-  const user = generateFakeUser();
-  fakeUsers.push(user);
-}
-
-console.log(fakeUsers);
+const fakeHistoricalRepairRecords = generateFakeData(generateFakeHistoricalRepairRecord, 10);
+console.log(fakeHistoricalRepairRecords)
