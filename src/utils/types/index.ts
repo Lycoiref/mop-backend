@@ -1,10 +1,9 @@
 import { 
-    device as Device,
-    user as User,
-    repair_form as RepairForm,
-    historical_repair_record as HistoricalRepairRecord,
-    reimbursement_record as ReimbursementRecord,
-
+    Device,
+    User,
+    RepairForm,
+    HistoricalRepairRecord,
+    ReimbursementRecord,
 } from "@prisma/client"
 
 export type DeviceInput = Partial<Device>

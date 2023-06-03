@@ -11,3 +11,7 @@
     # nodemon index.ts
     yarn dev
 ```
+
+## 项目规范
+* 数据库字段
+  * 下划线命名 

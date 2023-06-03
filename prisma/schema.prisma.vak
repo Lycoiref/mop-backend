@@ -9,7 +9,7 @@ datasource db {
 
 // 设备信息
 model Device {
-    id      Int     @id
+    device_no      Int     @id
     device_kind    Int?
     device_name    String? @db.VarChar(255)
     device_address String? @db.VarChar(255)
@@ -33,36 +33,36 @@ model User {
 // 工单信息
 model RepairForm {
     id            Int       @id @default(autoincrement())
-    device_info   Device    @relation(fields: [device_id], references: [id])
+    device_info   device    @relation(fields: [device_id], references: [device_no])
     device_id     Int   @unique
-    user_info     User      @relation(fields: [user_id], references: [id])
+    user_info     user      @relation(fields: [user_id], references: [id])
     user_id       Int   @unique    
     fault_desc    String? @db.VarChar(255)
     fault_pic     String? @db.VarChar(255)
     door_time     DateTime? @db.Date
-    @@map("repair_form")
+    @@map('repair_form')
 }
 
 // 历史报修记录
 model HistoricalRepairRecord {
-    id      Int     @id
+    repair_no      Int     @id
     device_name    String?
     repair_person  String?
     repair_address String?
     repair_reason  String?
     comment_status Boolean? @default(false)
-    @@map("historical_repair_record")
+    @@map('historical_repair_record')
 }
 
 // 发票报销记录
 model ReimbursementRecord {
     // 主键、发票代码
-    id      Int     @id
+    reimburse_no      Int     @id
     applicant_name    String? @db.VarChar(255)
     seller            String? @db.VarChar(255)
     tax_price         Int?
     billing_date      DateTime? @db.Date
     status            Boolean? @default(false)
     approver          String? @db.VarChar(255)
-    @@map("reimbursement_record")
+    @@map('reimbursement_record')
 }

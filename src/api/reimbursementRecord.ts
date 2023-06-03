@@ -1,51 +1,51 @@
 import Router from 'koa-router'
-import { ReimbursementRecordInput } from '../utils/types';
-import { reimbursement_record as ReimbursementRecord } from '@prisma/client';
+import { ReimbursementRecord } from '@prisma/client';
 import prisma from '../utils/database/database';
+import { ReimbursementRecordInput } from '../utils/types';
 
 const router = new Router();
 
 router.post('/reimburse', async (ctx) => {
-    const data: ReimbursementRecordInput = {
-        ...ctx.request.body as ReimbursementRecord
+    const data: ReimbursementRecord = {
+        ...(ctx.request.body as ReimbursementRecord)
     }
 
-    const reimbursementRecord = await prisma.reimbursement_record.create({
+    const reimbursementRecord = await prisma.reimbursementRecord.create({
         data
     })
 
     ctx.body = reimbursementRecord
 })
 
-router.delete('/reimburse/:id', async (ctx) => {
+router.delete('/:id', async (ctx) => {
     const id = parseInt(ctx.params.id)
-    const user = await prisma.user.delete({
+    const reimbursementRecord = await prisma.reimbursementRecord.delete({
         where: { id: id },
     })
-    ctx.body = user
+    ctx.body = reimbursementRecord
 })
 
-router.put('/reimburse/:id', async (ctx) => {
+router.put('/:id', async (ctx) => {
     const id = parseInt(ctx.params.id)
-    const user = await prisma.user.update({
+    const reimbursementRecord = await prisma.reimbursementRecord.update({
       where: { id: id },
       data: {
-          ...ctx.request.body as User
+          ...ctx.request.body as ReimbursementRecordInput
       },
     })
-    ctx.body = user
+    ctx.body = reimbursementRecord
 })
 
-router.get('/reimburse', async (ctx) => {
-    const users = await prisma.user.findMany()
-    ctx.body = users
+router.get('/', async (ctx) => {
+    const reimbursementRecords = await prisma.reimbursementRecord.findMany()
+    ctx.body = reimbursementRecords
 })
 
-router.get('/reimburse/:id', async (ctx) => {
-    const userId = parseInt(ctx.params.id)
-    const user = await prisma.user.findUnique({ where: { id: userId } })
-    if (user) {
-        ctx.body = user
+router.get('/:id', async (ctx) => {
+    const reimbursementRecordId = parseInt(ctx.params.id)
+    const reimbursementRecord = await prisma.reimbursementRecord.findUnique({ where: { id: reimbursementRecordId } })
+    if (reimbursementRecord) {
+        ctx.body = reimbursementRecord
     } else {
         ctx.status = 404
         ctx.body = { message: 'User not found' }
