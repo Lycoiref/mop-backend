@@ -2,17 +2,12 @@ import { PrismaClient, User } from '@prisma/client';
 import { generateFakeUser } from '../mock';
 import { UserWithoutId } from '../types';
 
-
 const prisma = new PrismaClient();
-
-let fakeUser: UserWithoutId
 
 beforeAll(async () => {
   await prisma.$connect();
   // 先清空所有数据
   await prisma.user.deleteMany({});
-  fakeUser = generateFakeUser(1)[0]
-  console.log(fakeUser)
 });
 
 afterAll(async () => {
@@ -20,21 +15,53 @@ afterAll(async () => {
 });
 
 describe('user CRUD tests', () => {
-  test.concurrent('should create a new user', async () => {
-    const newUser = await prisma.user.create({
-      data: fakeUser
-    });
 
-    expect(newUser.username).toBe(fakeUser.username);
-    expect(newUser.idcardcheck).toBe(fakeUser.idcardcheck);
-    expect(newUser.account).toBe(fakeUser.account);
-    expect(newUser.idcard).toBe(fakeUser.idcard);
-    expect(newUser.password).toBe(fakeUser.password);
-    expect(newUser.phone).toBe(fakeUser.phone);
-    expect(newUser.role).toBe(fakeUser.role);
+  beforeEach(async () => {
+    // 在每个测试之前，清空用户表数据
+    await prisma.user.deleteMany({});
   });
 
-  test.concurrent('should get all users', async () => {
+  test('should create a new user', async () => {
+    const oldUser = generateFakeUser(1)[0]
+    const newUser = await prisma.user.create({
+      data: oldUser
+    });
+
+    expect(newUser.username).toBe(oldUser.username);
+    expect(newUser.idcardcheck).toBe(oldUser.idcardcheck);
+    expect(newUser.account).toBe(oldUser.account);
+    expect(newUser.idcard).toBe(oldUser.idcard);
+    expect(newUser.password).toBe(oldUser.password);
+    expect(newUser.phone).toBe(oldUser.phone);
+    expect(newUser.role).toBe(oldUser.role);
+  });
+
+  test('should get a user by its id', async () => {
+    const oldUser: User = await prisma.user.create({
+      data: generateFakeUser(1)[0]
+    })
+
+    const newUser: User | null = await prisma.user.findUnique({
+      where: {
+        id: oldUser.id
+      }
+    })
+
+
+    if (newUser !== null) {
+      expect(newUser.username).toBe(oldUser.username);
+      expect(newUser.idcardcheck).toBe(oldUser.idcardcheck);
+      expect(newUser.account).toBe(oldUser.account);
+      expect(newUser.idcard).toBe(oldUser.idcard);
+      expect(newUser.password).toBe(oldUser.password);
+      expect(newUser.phone).toBe(oldUser.phone);
+      expect(newUser.role).toBe(oldUser.role);
+    } else {
+      throw new Error("newUser shouldn't be null");
+    }    
+  })
+
+  test('should get all users', async () => {
     let fakeUsers: Array<UserWithoutId> = generateFakeUser(2)
     await prisma.user.createMany({
       data: fakeUsers,
@@ -42,13 +69,12 @@ describe('user CRUD tests', () => {
 
     const users = await prisma.user.findMany();
 
-    expect(users.length).toBe(3);
-    expect(users[0].username).toBe(fakeUser.username);
-    expect(users[1].idcard).toBe(fakeUsers[0].idcard);
-    expect(users[2].password).toBe(fakeUsers[1].password);
+    expect(users.length).toBe(2);
+    expect(users[0].idcard).toBe(fakeUsers[0].idcard);
+    expect(users[1].password).toBe(fakeUsers[1].password);
   });
 
-  test.concurrent('should update a user', async () => {
+  test('should update a user', async () => {
     let newFakeUser = generateFakeUser(1)[0]
     const newUser = await prisma.user.create({
       data: newFakeUser,
@@ -69,7 +95,7 @@ describe('user CRUD tests', () => {
     });
 
     const tmpUsers = await prisma.user.findMany();
-    expect(tmpUsers.length).toBe(5);
+    expect(tmpUsers.length).toBe(1);
 
     await prisma.user.delete({
       where: { id: newUser.id },
@@ -77,6 +103,6 @@ describe('user CRUD tests', () => {
 
     const users = await prisma.user.findMany();
 
-    expect(users.length).toBe(4);
+    expect(users.length).toBe(0);
   });
 });
