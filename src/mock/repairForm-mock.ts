@@ -1,19 +1,22 @@
 import { faker } from "@faker-js/faker";
-import generateFakeData from './utils';
+import { generateFakeData, generatePositiveInt32 } from './utils';
+import { RepairFormWithoutIds } from "../types";
 
-export const generateFakeRepairForm = () => {
+function createFakeRepairForm(): RepairFormWithoutIds {
   const fakeRepairForm = {
-    device_id: faker.number.int(),
-    user_id: faker.number.int(),
-    fault_desc: faker.lorem.sentence(),
-    fault_pic: faker.image.url(),
-    door_time: faker.date.future(),
+    // deviceId 与 userId 由外键约束，因此不需要创建
+    // deviceId: generatePositiveInt32(),
+    // userId: generatePositiveInt32(),
+    faultDesc: faker.lorem.sentence(),
+    faultPic: faker.image.url(),
+    doorTime: faker.date.future(),
   };
 
   return fakeRepairForm;
 }
 
-// 生成假数据
-const fakeRepairFormData = generateFakeData(generateFakeRepairForm, 10);
+export const generateFakeRepairForm = (num: number) => {
+  const fakeRepairFormData = generateFakeData(createFakeRepairForm, num);
+  return fakeRepairFormData
+}
 
-console.log(fakeRepairFormData);

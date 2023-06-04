@@ -1,11 +1,12 @@
 import { faker } from "@faker-js/faker";
 
-import generateFakeData from './utils';
+import { generateFakeData, generatePositiveInt32 } from './utils';
+import { UserWithoutId } from "../types";
 
-export const generateFakeUser = () => {
+function createFakeUser(): UserWithoutId {
   const fakeUser = {
     username: faker.internet.userName(),
-    idcardcheck: faker.number.int(),
+    idcardcheck: generatePositiveInt32(),
     account: faker.internet.userName(),
     idcard: faker.string.uuid(),
     password: faker.internet.password(),
@@ -16,7 +17,7 @@ export const generateFakeUser = () => {
   return fakeUser;
 }
 
-// 生成假数据
-const fakeUserData = generateFakeData(generateFakeUser, 10);
-
-console.log(fakeUserData);
+export const generateFakeUser = (num: number) => {
+  const fakeUserData = generateFakeData(createFakeUser, num);
+  return fakeUserData
+}

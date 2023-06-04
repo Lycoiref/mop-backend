@@ -1,5 +1,5 @@
 import Router from 'koa-router'
-import { UserInput } from '../utils/types';
+import { UserInput } from '../types';
 import { User } from '@prisma/client';
 import prisma from '../utils/database/database';
 

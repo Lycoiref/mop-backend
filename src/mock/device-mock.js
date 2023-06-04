@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateFakeDevice = void 0;
 var faker_1 = require("@faker-js/faker");
 var utils_1 = require("./utils");
-// 生成虚拟用户数据
-var generateFakeDevice = function () {
-    var deviceKind = faker_1.faker.number.int();
-    var deviceName = faker_1.faker.random.word();
-    var deviceAddress = faker_1.faker.address.streetAddress();
+function createDevice() {
+    var deviceKind = (0, utils_1.generatePositiveInt32)();
+    var deviceName = faker_1.faker.lorem.word();
+    var deviceAddress = faker_1.faker.location.streetAddress();
     var deviceQrcode = faker_1.faker.string.uuid();
     return {
         deviceKind: deviceKind,
@@ -14,7 +14,10 @@ var generateFakeDevice = function () {
         deviceAddress: deviceAddress,
         deviceQrcode: deviceQrcode
     };
+}
+// 生成虚拟用户数据
+var generateFakeDevice = function (num) {
+    var fakeDevices = (0, utils_1.generateFakeData)(createDevice, num);
+    return fakeDevices;
 };
-// 
-var fakeDevices = (0, utils_1.default)(generateFakeDevice, 10);
-console.log(fakeDevices);
+exports.generateFakeDevice = generateFakeDevice;

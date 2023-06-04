@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import { Device } from '@prisma/client';
 import prisma from '../utils/database/database';
-import { DeviceInput } from '../utils/types';
+import { DeviceInput } from '../types';
 
 const router = new Router();
 

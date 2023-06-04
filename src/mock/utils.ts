@@ -1,4 +1,6 @@
-const  generateFakeData = (fn: Function, num: number): Array<object> => {
+import { faker } from "@faker-js/faker";
+
+export const generateFakeData: Function = (fn: Function, num: number): Array<object> => {
   let arr = []
   for (let i = 0; i < num; i++) {
     const fakeData = fn();
@@ -7,4 +9,4 @@ const  generateFakeData = (fn: Function, num: number): Array<object> => {
   return arr
 }
 
-export default generateFakeData
+export const generatePositiveInt32 = () => faker.number.int({ min: 0, max: 2147483647 })

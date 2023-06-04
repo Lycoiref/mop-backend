@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import { ReimbursementRecord } from '@prisma/client';
 import prisma from '../utils/database/database';
-import { ReimbursementRecordInput } from '../utils/types';
+import { ReimbursementRecordInput } from '../types';
 
 const router = new Router();
 

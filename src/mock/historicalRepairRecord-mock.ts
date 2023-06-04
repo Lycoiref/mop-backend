@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
-import generateFakeData from './utils';
+import { generateFakeData } from './utils';
+import { HistoricalRepairRecordWithoutId } from '../types';
 
-// 生成虚拟用户数据
-export const generateFakeHistoricalRepairRecord = () => {
+function createHistoricalRepairRecord(): HistoricalRepairRecordWithoutId {
   const deviceName = faker.lorem.word()
   const repairPerson = faker.person.firstName()
   const repairAddress = faker.location.streetAddress()
@@ -16,7 +16,11 @@ export const generateFakeHistoricalRepairRecord = () => {
     repairReason,
     commentStatus
   };
+}
+
+// 生成虚拟用户数据
+export const generateFakeHistoricalRepairRecord = (num: number) => {
+  const fakeHistoricalRepairRecords = generateFakeData(createHistoricalRepairRecord, num);
+  return fakeHistoricalRepairRecords
 };
 
-const fakeHistoricalRepairRecords = generateFakeData(generateFakeHistoricalRepairRecord, 10);
-console.log(fakeHistoricalRepairRecords)

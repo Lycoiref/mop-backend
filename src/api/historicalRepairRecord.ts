@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import { HistoricalRepairRecord } from '@prisma/client';
 import prisma from '../utils/database/database';
-import { HistoricalRepairRecordInput } from '../utils/types';
+import { HistoricalRepairRecordInput } from '../types';
 
 const router = new Router();
 

@@ -1,17 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateFakeRepairForm = void 0;
 var faker_1 = require("@faker-js/faker");
 var utils_1 = require("./utils");
-function generateFakeRepairForm() {
+function createFakeRepairForm() {
     var fakeRepairForm = {
-        device_id: faker_1.faker.number.int(),
-        user_id: faker_1.faker.number.int(),
-        fault_desc: faker_1.faker.lorem.sentence(),
-        fault_pic: faker_1.faker.image.imageUrl(),
-        door_time: faker_1.faker.date.future(),
+        // deviceId 与 userId 由外键约束，因此不需要创建
+        // deviceId: generatePositiveInt32(),
+        // userId: generatePositiveInt32(),
+        faultDesc: faker_1.faker.lorem.sentence(),
+        faultPic: faker_1.faker.image.url(),
+        doorTime: faker_1.faker.date.future(),
     };
     return fakeRepairForm;
 }
-// 生成假数据
-var fakeRepairFormData = (0, utils_1.default)(generateFakeRepairForm, 10);
-console.log(fakeRepairFormData);
+var generateFakeRepairForm = function (num) {
+    var fakeRepairFormData = (0, utils_1.generateFakeData)(createFakeRepairForm, num);
+    return fakeRepairFormData;
+};
+exports.generateFakeRepairForm = generateFakeRepairForm;

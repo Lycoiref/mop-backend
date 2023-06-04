@@ -1,5 +1,5 @@
 import Router from 'koa-router'
-import { RepairFormInput } from '../utils/types';
+import { RepairFormInput } from '../types';
 import { RepairForm } from '@prisma/client';
 import prisma from '../utils/database/database';
 
