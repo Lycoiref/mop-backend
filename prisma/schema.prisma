@@ -14,7 +14,7 @@ model Device {
   deviceName    String?      @map("device_name") @db.VarChar(255)
   deviceAddress String?      @map("device_address") @db.VarChar(255)
   deviceQrcode  String?      @map("device_qrcode")
-  forms          RepairForm[]
+  forms         RepairForm[]
 
   @@map("device")
 }
@@ -29,7 +29,7 @@ model User {
   password    String?      @db.VarChar(255)
   phone       String?      @db.VarChar(255)
   role        String?      @db.VarChar(255)
-  forms        RepairForm[]
+  forms       RepairForm[]
 
   @@map("user")
 }
