@@ -1,75 +1,75 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // 设备信息
 model Device {
-    id            Int         @id @default(autoincrement())
-    deviceKind    Int?        @map("device_kind")
-    deviceName    String?     @map("device_name") @db.VarChar(255)
-    deviceAddress String?     @map("device_address") @db.VarChar(255)
-    deviceQrcode  String?     @map("device_qrcode")
-    form          RepairForm?
+  id            Int          @id @default(autoincrement())
+  deviceKind    Int?         @map("device_kind")
+  deviceName    String?      @map("device_name") @db.VarChar(255)
+  deviceAddress String?      @map("device_address") @db.VarChar(255)
+  deviceQrcode  String?      @map("device_qrcode")
+  forms          RepairForm[]
 
-    @@map("device")
+  @@map("device")
 }
 
 // 用户信息
 model User {
-    id          Int         @id @default(autoincrement())
-    username    String?     @db.VarChar(255)
-    idcardcheck Int?
-    account     String?     @db.VarChar(255)
-    idcard      String?     @db.VarChar(255)
-    password    String?     @db.VarChar(255)
-    phone       String?     @db.VarChar(255)
-    role        String?     @db.VarChar(255)
-    form        RepairForm?
+  id          Int          @id @default(autoincrement())
+  username    String?      @db.VarChar(255)
+  idcardcheck Int?
+  account     String?      @db.VarChar(255)
+  idcard      String?      @db.VarChar(255)
+  password    String?      @db.VarChar(255)
+  phone       String?      @db.VarChar(255)
+  role        String?      @db.VarChar(255)
+  forms        RepairForm[]
 
-    @@map("user")
+  @@map("user")
 }
 
 // 工单信息
 model RepairForm {
-    id          Int       @id @default(autoincrement())
-    device_info Device    @relation(fields: [deviceId], references: [id])
-    deviceId    Int       @unique @map("device_id")
-    user_info   User      @relation(fields: [userId], references: [id])
-    userId      Int       @unique @map("user_id")
-    faultDesc   String?   @map("fault_desc") @db.VarChar(255)
-    faultPic    String?   @map("fault_pic") @db.VarChar(255)
-    doorTime    DateTime? @map("door_time") @db.Date
+  id          Int       @id @default(autoincrement())
+  device_info Device    @relation(fields: [deviceId], references: [id])
+  deviceId    Int       @map("device_id")
+  user_info   User      @relation(fields: [userId], references: [id])
+  userId      Int       @map("user_id")
+  faultDesc   String?   @map("fault_desc") @db.VarChar(255)
+  faultPic    String?   @map("fault_pic") @db.VarChar(255)
+  doorTime    DateTime? @map("door_time") @db.Timestamp
 
-    @@map("repair_form")
+  @@map("repair_form")
 }
 
 // 历史报修记录
 model HistoricalRepairRecord {
-    id            Int      @id @default(autoincrement())
-    deviceName    String?  @map("device_name")
-    repairPerson  String?  @map("repair_person")
-    repairAddress String?  @map("repair_address")
-    repairReason  String?  @map("repair_reason")
-    commentStatus Boolean? @default(false) @map("comment_status")
+  id            Int      @id @default(autoincrement())
+  deviceName    String?  @map("device_name")
+  repairPerson  String?  @map("repair_person")
+  repairAddress String?  @map("repair_address")
+  repairReason  String?  @map("repair_reason")
+  commentStatus Boolean? @default(false) @map("comment_status")
 
-    @@map("historical_repair_record")
+  @@map("historical_repair_record")
 }
 
 // 发票报销记录
 model ReimbursementRecord {
-    // 主键、发票代码
-    id            Int       @id @default(autoincrement())
-    applicantName String?   @map("applicant_name") @db.VarChar(255)
-    seller        String?   @db.VarChar(255)
-    taxPrice      Int?      @map("tax_price")
-    billingDate   DateTime? @map("billing_date") @db.Date
-    status        Boolean?  @default(false)
-    approver      String?   @db.VarChar(255)
+  // 主键、发票代码
+  id            Int       @id @default(autoincrement())
+  applicantName String?   @map("applicant_name") @db.VarChar(255)
+  seller        String?   @db.VarChar(255)
+  taxPrice      Int?      @map("tax_price")
+  billingDate   DateTime? @map("billing_date") @db.Timestamp
+  status        Boolean?  @default(false)
+  approver      String?   @db.VarChar(255)
 
-    @@map("reimbursement_record")
+  @@map("reimbursement_record")
 }

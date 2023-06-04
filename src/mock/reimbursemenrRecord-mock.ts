@@ -8,7 +8,7 @@ function createFakeReimburse(): ReimbursementRecordWithoutId {
     applicantName: faker.person.firstName(),
     seller: faker.company.name(),
     taxPrice: parseInt(faker.string.numeric()),
-    billingDate: faker.date.past(),
+    billingDate: faker.date.birthdate(),
     status: Math.random() < 0.5,
     approver: faker.person.firstName(),
   }

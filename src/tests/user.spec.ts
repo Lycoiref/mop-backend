@@ -6,12 +6,14 @@ const prisma = new PrismaClient();
 
 beforeAll(async () => {
   await prisma.$connect();
-  // 先清空所有数据
+  // 清空所有数据
   await prisma.user.deleteMany({});
 });
 
 afterAll(async () => {
   await prisma.$disconnect();
+  // 清空所有数据
+  await prisma.user.deleteMany({});
 });
 
 describe('user CRUD tests', () => {
