@@ -1,6 +1,6 @@
 import { PrismaClient, ReimbursementRecord } from '@prisma/client';
-import { generateFakeReimburse } from '../mock';
-import { ReimbursementRecordWithoutId } from '../types';
+import { generateFakeReimburse } from '../../mock';
+import { ReimbursementRecordWithoutId } from '../../types';
 
 const prisma = new PrismaClient();
 

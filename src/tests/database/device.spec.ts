@@ -1,6 +1,7 @@
 import { PrismaClient, Device } from '@prisma/client';
-import { generateFakeDevice } from '../mock';
-import { DeviceWithoutId } from '../types';
+import { generateFakeDevice } from '../../mock';
+import { DeviceWithoutId } from '../../types';
+import { addDevice, deleteDeviceById, getAllDevice, updateDeviceById } from '../../utils/request/modules/device';
 
 const prisma = new PrismaClient();
 
@@ -76,28 +77,23 @@ describe('device CRUD tests', () => {
       data: newFakeDevice,
     });
 
-    const updateDevice = await prisma.device.update({
-      where: { id: newDevice.id },
-      data: { deviceName: 'New Name' },
-    });
+    newDevice.deviceName = 'New Name'
+
+    const updateDevice = (await updateDeviceById(newDevice.id, newDevice)).data
 
     expect(updateDevice.deviceName).toBe('New Name');
   });
 
   test('should delete a device', async () => {
     let newFakeDevice = generateFakeDevice(1)[0]
-    const newDevice = await prisma.device.create({
-      data: newFakeDevice,
-    });
+    const newDevice = (await addDevice(newFakeDevice)).data
 
-    const tmpDevices = await prisma.device.findMany();
+    const tmpDevices = (await getAllDevice()).data;
     expect(tmpDevices.length).toBe(1);
 
-    await prisma.device.delete({
-      where: { id: newDevice.id },
-    });
+    await deleteDeviceById(newDevice.id)
 
-    const devices = await prisma.device.findMany();
+    const devices = (await getAllDevice()).data;
 
     expect(devices.length).toBe(0);
   });

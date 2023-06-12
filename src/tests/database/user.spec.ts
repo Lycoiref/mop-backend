@@ -1,6 +1,6 @@
 import { PrismaClient, User } from '@prisma/client';
-import { generateFakeUser } from '../mock';
-import { UserWithoutId } from '../types';
+import { generateFakeUser } from '../../mock';
+import { UserWithoutId } from '../../types';
 
 const prisma = new PrismaClient();
 

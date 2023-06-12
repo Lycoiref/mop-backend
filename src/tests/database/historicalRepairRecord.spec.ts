@@ -1,6 +1,6 @@
 import { PrismaClient, HistoricalRepairRecord } from '@prisma/client';
-import { generateFakeHistoricalRepairRecord } from '../mock';
-import { HistoricalRepairRecordWithoutId } from '../types';
+import { generateFakeHistoricalRepairRecord } from '../../mock';
+import { HistoricalRepairRecordWithoutId } from '../../types';
 
 const prisma = new PrismaClient();
 

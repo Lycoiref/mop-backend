@@ -1,6 +1,6 @@
 import { Device, PrismaClient, RepairForm, User } from '@prisma/client';
-import { generateFakeDevice, generateFakeRepairForm, generateFakeUser } from '../mock';
-import { RepairFormWithoutIds } from '../types';
+import { generateFakeDevice, generateFakeRepairForm, generateFakeUser } from '../../mock';
+import { RepairFormWithoutIds } from '../../types';
 
 const prisma = new PrismaClient();
 
